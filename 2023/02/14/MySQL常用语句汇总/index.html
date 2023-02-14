@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ybwell">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL常用语句汇总">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ybwell’blog">
+<meta property="og:url" content="http://example.com/2023/02/14/MySQL%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="ybwell’blog">
+<meta property="og:description" content="MySQL常用语句汇总">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-14T11:14:22.702Z">
+<meta property="article:modified_time" content="2023-02-14T11:26:06.180Z">
+<meta property="article:author" content="ybwell">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>ybwell’blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ybwell</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-14 19:14" pubdate>
+          星期二, 二月 14日 2023, 7:14 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="MySQL常用语句汇总"><a href="#MySQL常用语句汇总" class="headerlink" title="MySQL常用语句汇总"></a>MySQL常用语句汇总</h2><span id="more"></span>
+<h4 id="数据库的操作（一）"><a href="#数据库的操作（一）" class="headerlink" title="数据库的操作（一）"></a>数据库的操作（一）</h4><h5 id="查看当前数据库"><a href="#查看当前数据库" class="headerlink" title="查看当前数据库"></a>查看当前数据库</h5><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-meta"># 查看所有的数据</span><br><span class="hljs-keyword">SHOW</span> DATABASES;<br><span class="hljs-meta"># 使用某一个数据</span><br><span class="hljs-keyword">USE</span> coderhub;<br><span class="hljs-meta"># 查看当前正在使用的数据库</span><br><span class="hljs-built_in">SELECT</span> <span class="hljs-built_in">DATABASE</span>();<br></code></pre></td></tr></table></figure>
+
+<h5 id="创建新的数据库"><a href="#创建新的数据库" class="headerlink" title="创建新的数据库"></a>创建新的数据库</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 创建数据库语句<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> bilibili;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> bilibili;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> bilibili<br><span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_0900_ai_ci;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="数据库的操作（二）"><a href="#数据库的操作（二）" class="headerlink" title="数据库的操作（二）"></a>数据库的操作（二）</h4><h5 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 删除数据库<br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span> bilibili; <br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXIT</span> bilibili;<br></code></pre></td></tr></table></figure>
+
+<h5 id="修改数据库："><a href="#修改数据库：" class="headerlink" title="修改数据库："></a>修改数据库：</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 修改数据库的字符集和排序规则 <br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">DATABASE</span> bilibili <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> = utf8 <span class="hljs-keyword">COLLATE</span> = utf8_unicode_ci;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="数据表的操作"><a href="#数据表的操作" class="headerlink" title="数据表的操作"></a>数据表的操作</h4><h5 id="查看数据表"><a href="#查看数据表" class="headerlink" title="查看数据表"></a>查看数据表</h5><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># 查看所有的数据表 </span><br><span class="hljs-attribute">SHOW</span> TABLES; <br><span class="hljs-comment"># 查看某一个表结构 </span><br><span class="hljs-attribute">DESC</span> user;<br></code></pre></td></tr></table></figure>
+
+<h5 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> `users`( <br>	<span class="hljs-type">name</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>), <br>	age <span class="hljs-type">INT</span>, <br>	height <span class="hljs-type">DOUBLE</span> <br>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建一个完整的表"><a href="#创建一个完整的表" class="headerlink" title="创建一个完整的表"></a>创建一个完整的表</h4><h5 id="创建数据表-1"><a href="#创建数据表-1" class="headerlink" title="创建数据表"></a>创建数据表</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> `users`( <br>	id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY KEY</span> AUTO_INCREMENT, <br>	<span class="hljs-type">name</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>, age <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>, <br>	telPhone <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <br>);<br></code></pre></td></tr></table></figure>
+
+<h5 id="删除数据表"><a href="#删除数据表" class="headerlink" title="删除数据表"></a>删除数据表</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> users;<br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> users;<br></code></pre></td></tr></table></figure>
+
+<h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"># <span class="hljs-number">1</span>.修改表名<br>ALTER TABLE `moments` RENAME TO `moment`;<br># <span class="hljs-number">2</span>.添加一个新的列<br>ALTER TABLE `moment` ADD `publishTime` DATETIME<span class="hljs-comment">;</span><br>ALTER TABLE `moment` ADD `updateTime` DATETIME<span class="hljs-comment">;</span><br># <span class="hljs-number">3</span>.删除一列数据<br>ALTER TABLE `moment` DROP `updateTime`;<br># <span class="hljs-number">4</span>.修改列的名称<br>ALTER TABLE `moment` CHANGE `publishTime` `publishDate` DATE<span class="hljs-comment">;</span><br># <span class="hljs-number">5</span>.修改列的数据类型<br>ALTER TABLE `moment` MODIFY `id` INT<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建新表-删除操作"><a href="#创建新表-删除操作" class="headerlink" title="创建新表-删除操作"></a>创建新表-删除操作</h4><p>DML：Data Manipulation Language（数据操作语言）</p>
+<h5 id="创建一张新的表"><a href="#创建一张新的表" class="headerlink" title="创建一张新的表"></a>创建一张新的表</h5><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">CREATE TABLE IF <span class="hljs-literal">NOT</span> EXISTS `products`(<br>	`id` INT PRIMARY KEY AUTO_INCREMENT,<br>	`title` VARCHAR(<span class="hljs-number">20</span>),<br>	`description` VARCHAR(<span class="hljs-number">200</span>),<br>	`price` DOUBLE,<br>	`publishTime` DATETIME<br>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-symbol">`products`</span> (<span class="hljs-symbol">`title`</span>, <span class="hljs-symbol">`description`</span>, <span class="hljs-symbol">`price`</span>, <span class="hljs-symbol">`publishTime`</span>)<br>					<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;iPhone&#x27;</span>, <span class="hljs-string">&#x27;iPhone12只要998&#x27;</span>, <span class="hljs-number">998.88</span>, <span class="hljs-string">&#x27;2020-10-10&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-symbol">`products`</span> (<span class="hljs-symbol">`title`</span>, <span class="hljs-symbol">`description`</span>, <span class="hljs-symbol">`price`</span>, <span class="hljs-symbol">`publishTime`</span>)<br>					<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;huawei&#x27;</span>, <span class="hljs-string">&#x27;iPhoneP40只要888&#x27;</span>, <span class="hljs-number">888.88</span>, <span class="hljs-string">&#x27;2020-11-11&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="删除操作-更新操作"><a href="#删除操作-更新操作" class="headerlink" title="删除操作-更新操作"></a>删除操作-更新操作</h4><h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 删除数据<br># 会删除表中所有的数据<br><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 会删除符合条件的数据<br><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`title`</span> = <span class="hljs-string">&#x27;iPhone&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 修改数据<br># 会修改表中所有的数据<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`title`</span> = <span class="hljs-string">&#x27;iPhone12&#x27;</span>, <span class="hljs-symbol">`price`</span> = <span class="hljs-number">1299.88</span>;<br># 会修改符合条件的数据<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`title`</span> = <span class="hljs-string">&#x27;iPhone12&#x27;</span>, <span class="hljs-symbol">`price`</span> = <span class="hljs-number">1299.88</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`title`</span> = <span class="hljs-string">&#x27;iPhone&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>如果我们希望修改完数据后，直接可以显示最新的更新时间</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> `products` <span class="hljs-keyword">ADD</span> `updateTime` <span class="hljs-type">TIMESTAMP</span><br>					<span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="DQL语句"><a href="#DQL语句" class="headerlink" title="DQL语句"></a>DQL语句</h4><p>DQL：Data Query Language（数据查询语言）SELECT用于从一个或者多个表中检索选中的行（Record）</p>
+<h5 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 查询所有的数据并且显示所有的字段：<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 查询title、brand、price：<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">title</span>, brand, price <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 我们也可以给字段起别名，别名一般在多张表或者给客户端返回对应的key时会使用到；<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">title</span> <span class="hljs-keyword">as</span> t, brand <span class="hljs-keyword">as</span> b, price <span class="hljs-keyword">as</span> p <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="WHERE的比较运算符"><a href="#WHERE的比较运算符" class="headerlink" title="WHERE的比较运算符"></a>WHERE的比较运算符</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 查询价格小于1000的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price &lt; <span class="hljs-number">1000</span>;<br># 查询价格大于等于2000的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price &gt;= <span class="hljs-number">2000</span>;<br># 价格等于3399的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price = <span class="hljs-number">3399</span>;<br># 价格不等于3399的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price = <span class="hljs-number">3399</span>;<br># 查询华为品牌的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;华为&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="WHERE的逻辑运算符"><a href="#WHERE的逻辑运算符" class="headerlink" title="WHERE的逻辑运算符"></a>WHERE的逻辑运算符</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 查询品牌是华为，并且小于2000元的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;华为&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-symbol">`price`</span> &lt; <span class="hljs-number">2000</span>;<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;华为&#x27;</span> &amp;&amp; <span class="hljs-symbol">`price`</span> &lt; <span class="hljs-number">2000</span>;<br># 查询1000到2000的手机（不包含1000和2000）<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price &gt; <span class="hljs-number">1000</span> <span class="hljs-keyword">and</span> price &lt; <span class="hljs-number">2000</span>;<br># OR: 符合一个条件即可<br># 查询所有的华为手机或者价格小于1000的手机<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> brand = <span class="hljs-string">&#x27;华为&#x27;</span> <span class="hljs-keyword">or</span> price &lt; <span class="hljs-number">1000</span>;<br># 查询1000到2000的手机（包含1000和2000）<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> price <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">and</span> <span class="hljs-number">2000</span>;<br># 查看多个结果中的一个<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> brand <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;华为&#x27;</span>, <span class="hljs-string">&#x27;小米&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h5 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h5><p>使用LIKE关键字，结合两个特殊的符号： %表示匹配任意个的任意字符； _表示匹配一个的任意字符；</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 查询所有以v开头的title<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">title</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;v%&#x27;</span>;<br># 查询带M的title<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">title</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%M%&#x27;</span>;<br># 查询带M的title必须是第三个字符<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">title</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;__M%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="查询结果排序"><a href="#查询结果排序" class="headerlink" title="查询结果排序"></a>查询结果排序</h4><p>当我们查询到结果的时候，我们希望讲结果按照某种方式进行排序，这个时候使用的是ORDER BY； </p>
+<p>ORDER BY有两个常用的值： ASC：升序排列； DESC：降序排列；</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> brand = <span class="hljs-string">&#x27;华为&#x27;</span> <span class="hljs-keyword">or</span> price &lt; <span class="hljs-number">1000</span> <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> price <span class="hljs-keyword">ASC</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h4><p>当数据库中的数据非常多时，一次性查询到所有的结果进行显示是不太现实的：</p>
+<p>​    在真实开发中，我们都会要求用户传入offset、limit或者page等字段；</p>
+<p>​    它们的目的是让我们可以在数据库中进行分页查询；</p>
+<p>​    它的用法有[LIMIT {[offset,] row_count | row_count OFFSET offset}]</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">30</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">0</span>;<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">30</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">30</span>;<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">30</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">60</span>;<br># 另外一种写法：offset, row_count<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">90</span>, <span class="hljs-number">30</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h4><p>聚合函数表示对值集合进行操作的组（集合）函数。</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 华为手机价格的平均值<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(price) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> brand = <span class="hljs-string">&#x27;华为&#x27;</span>;<br># 计算所有手机的平均分<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(score) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 手机中最低和最高分数<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MAX</span>(score) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MIN</span>(score) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 计算总投票人数<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">SUM</span>(voteCnt) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 计算所有条目的数量<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(*) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span>;<br># 华为手机的个数<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(*) <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">WHERE</span> brand = <span class="hljs-string">&#x27;华为&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Group-By"><a href="#Group-By" class="headerlink" title="Group By"></a>Group By</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 比如：如果我们还希望筛选出平均价格在4000以下，并且平均分在7以上的品牌：<br><span class="hljs-keyword">SELECT</span> brand,<br>	<span class="hljs-built_in">COUNT</span>(*) <span class="hljs-keyword">as</span> <span class="hljs-built_in">count</span>,<br>	<span class="hljs-built_in">ROUND</span>(<span class="hljs-built_in">AVG</span>(price),<span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> avgPrice,<br>	<span class="hljs-built_in">MAX</span>(price) <span class="hljs-keyword">as</span> maxPrice,<br>	<span class="hljs-built_in">MIN</span>(price) <span class="hljs-keyword">as</span> minPrice,<br>	<span class="hljs-built_in">AVG</span>(score) <span class="hljs-keyword">as</span> avgScore<br><span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> brand<br><span class="hljs-keyword">HAVING</span> avgPrice &lt; <span class="hljs-number">4000</span> <span class="hljs-keyword">and</span> avgScore &gt; <span class="hljs-number">7</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建外键"><a href="#创建外键" class="headerlink" title="创建外键"></a>创建外键</h4><p>将两张表联系起来，我们可以将products中的brand_id关联到brand中的id：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 如果是创建表添加外键约束，我们需要在创建表的()最后添加如下语句；<br>FOREIGN KEY (brand_id) REFERENCES brand(id)<br># 如果是表已经创建好，额外添加外键：<br>ALTER TABLE `products` ADD FOREIGN KEY (brand_id) REFERENCES brand(id);<br># 现在我们可以将products中的brand_id关联到brand中的id的值：<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`brand_id`</span> = <span class="hljs-number">1</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;华为&#x27;</span>;<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`brand_id`</span> = <span class="hljs-number">4</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;OPPO&#x27;</span>;<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`brand_id`</span> = <span class="hljs-number">3</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;苹果&#x27;</span>;<br><span class="hljs-keyword">UPDATE</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">SET</span> <span class="hljs-symbol">`brand_id`</span> = <span class="hljs-number">2</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span> = <span class="hljs-string">&#x27;小米&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="外键存在时更新和删除数据"><a href="#外键存在时更新和删除数据" class="headerlink" title="外键存在时更新和删除数据"></a>外键存在时更新和删除数据</h4><h5 id="如何进行更新呢？"><a href="#如何进行更新呢？" class="headerlink" title="如何进行更新呢？"></a>如何进行更新呢？</h5><h5 id="如果修改外键的更新时的动作呢？"><a href="#如果修改外键的更新时的动作呢？" class="headerlink" title="如果修改外键的更新时的动作呢？"></a>如果修改外键的更新时的动作呢？</h5><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sas"># 第一步：查看表结构：这个时候，我们可以知道外键的名称是products_ibfk_1。<br>SHOW <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `products`; <br># 第二步：删除之前的外键<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> `products` <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> products_ibfk_1;<br># 第三步：添加新的外键，并且设置新的action<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> `products` <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (brand_id)<br>						<span class="hljs-keyword">REFERENCES</span> brand(id)<br>						<span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">CASCADE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">CASCADE</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h4><p>笛卡尔乘积</p>
+<h4 id="多表之间的连接"><a href="#多表之间的连接" class="headerlink" title="多表之间的连接"></a>多表之间的连接</h4><h5 id="左连接"><a href="#左连接" class="headerlink" title="左连接"></a>左连接</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id;<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id<br>						<span class="hljs-keyword">WHERE</span> brand.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="右连接"><a href="#右连接" class="headerlink" title="右连接"></a>右连接</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id;<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id<br>						<span class="hljs-keyword">WHERE</span> products.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h5><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"># 内连接，代表的是在两张表连接时就会约束数据之间的关系，来决定之后查询的结果；<br>SELECT * FROM `products` INNER JOIN `brand` ON `products`.brand_id = `brand`.id<span class="hljs-comment">;</span><br># where条件，代表的是先计算出笛卡尔乘积，在笛卡尔乘积的数据基础之上进行where条件的筛选；<br>SELECT * FROM `products`, `brand` WHERE `products`.brand_id = `brand`.id<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="全连接"><a href="#全连接" class="headerlink" title="全连接"></a>全连接</h5><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">(<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id)<br><span class="hljs-keyword">UNION</span><br>(<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id);<br><br>(<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`brand`</span>.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>)<br><span class="hljs-keyword">UNION</span><br>(<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-symbol">`products`</span> <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-symbol">`brand`</span> <span class="hljs-keyword">ON</span> <span class="hljs-symbol">`products`</span>.brand_id = <span class="hljs-symbol">`brand`</span>.id <span class="hljs-keyword">WHERE</span> <span class="hljs-symbol">`products`</span>.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2023/02/14/MySQL常用语句汇总/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ybwell</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
